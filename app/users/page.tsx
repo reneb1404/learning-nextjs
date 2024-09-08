@@ -6,7 +6,9 @@ interface User {
 }
 
 const UserPage = async () => {
-	const res = await fetch("https://jsonplaceholder.typicode.com/users");
+	const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+		next: { revalidate: 10 },
+	}); //background job, get data every 10s - only available in fetch function!!!!!!!
 	const users: User[] = await res.json();
 
 	return (
