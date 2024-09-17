@@ -23,7 +23,7 @@ export async function GET(
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { id: number } }
+	{ params }: { params: { id: string } }
 ) {
 	//validate the request body
 	//If invalid, return 400
@@ -31,13 +31,25 @@ export async function PUT(
 	const valid = schema.safeParse(body);
 	if (!valid.success)
 		return NextResponse.json(valid.error.errors, { status: 400 });
+
+	const user = await prisma.user.findUnique({
+		where: { id: parseInt(params.id) },
+	});
 	//Fetch the user with the given id
 	//If doesn't exist, return 404
-	if (params.id > 10)
+	if (!user)
 		return NextResponse.json({ error: "User not found" }, { status: 404 });
 	//Update User
 	//Return the updates user
-	return NextResponse.json({ id: 1, name: body.name });
+	const updateUser = prisma.user.update({
+		where: { id: user.id },
+		data: {
+			name: body.name,
+			email: body.email,
+		},
+	});
+
+	return NextResponse.json(updateUser);
 }
 
 export function DELETE(
