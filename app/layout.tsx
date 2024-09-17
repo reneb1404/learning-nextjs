@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
@@ -18,8 +19,10 @@ export default function RootLayout({
 	return (
 		<html lang="en" data-theme="sunset">
 			<body className={inter.className}>
-				<NavBar />
-				<main className="p-5">{children}</main>
+				<SessionProvider>
+					<NavBar />
+					<main className="p-5">{children}</main>
+				</SessionProvider>
 			</body>
 		</html>
 	);
