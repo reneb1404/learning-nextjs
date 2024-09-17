@@ -1,10 +1,12 @@
+import { auth } from "@/auth";
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 
-export default function Home() {
+export default async function Home() {
+	const session = await auth();
 	return (
 		<main>
-			<div>Hello World!</div>
+			<div>Hello {session && <span>{session.user!.name}</span>}</div>
 			<Link href="/users">Users</Link>
 			<ProductCard />
 		</main>
