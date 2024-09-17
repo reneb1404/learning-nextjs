@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import schema from "./schema";
 
 export async function GET(request: NextRequest) {
-	const product = prisma.product.findMany();
+	const product = await prisma.product.findMany();
 	return NextResponse.json(product);
 }
 
