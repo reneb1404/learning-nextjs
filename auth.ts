@@ -1,5 +1,7 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { prisma } from "./prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	providers: [Google],
@@ -7,5 +9,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		authorized: async ({ auth }) => {
 			return !!auth;
 		},
+	},
+	adapter: PrismaAdapter(prisma),
+	session: {
+		strategy: "jwt",
 	},
 });
