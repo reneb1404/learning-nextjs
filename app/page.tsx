@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
-import korkut from "@/public/images/korkut-mamet.jpg";
-import Image from "next/image";
+import { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 
@@ -11,15 +10,16 @@ export default async function Home() {
 			<div>Hello {session && <span>{session.user!.name}</span>}</div>
 			<Link href="/users">Users</Link>
 			<ProductCard />
-			<Image
-				src="https://bit.ly/react-cover"
-				alt="Korkut mamet"
-				fill
-				className="object-cover"
-				sizes="(max-width: 480px) 100vw, (max-width: 768) 50vw, 33vw"
-				quality={75}
-				priority
-			/>
 		</main>
 	);
+}
+
+//example
+export async function generateMetadata(): Promise<Metadata> {
+	const product = await fetch("");
+
+	return {
+		title: "product.title",
+		description: "product.description",
+	};
 }
